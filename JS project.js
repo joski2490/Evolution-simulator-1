@@ -19,8 +19,6 @@ function setup() {
 
   startEvaluation();
 }
-//Do update function next/creature functions. Ideally make creatures move, without nn for now.
-//All in Draw function
 
 /* 'Draw()' is part of P5.js and continually executes the lines of code 
 within it after the 'setup()' function has been triggered*/
