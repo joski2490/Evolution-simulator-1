@@ -12,51 +12,31 @@ var minSpeed = 0.6;
 var speed = 3;
 
 var foodArea = 80;
-var foodAmount = Math.round(WIDTH * HEIGHT * 4e-4);
+var foodAmount = 500;
 
 // GA settings
-var creatureAmount = Math.round(WIDTH * HEIGHT * 8e-5);
-var iterations = 500;
+var creatureAmount = 50;
+var iterations = 100;
 var startHiddenSize = 0;
 var mutationRate1 = 0.3;
 var elitismPercentage = 0.1;
 
-// Trained population
-var useTrained = false;
 
 // Global vars
 var neat;
 
 /** Construct the genetic algorithm */
 function initNeat(){
-    neat = new Neat(foodDetection * 2, 2, null,
-      {
-        //array of mutation types to be used in evolutionary process
-        mutation: [
-          Methods.Mutation.ADD_NODE,
-          Methods.Mutation.SUB_NODE,
-          Methods.Mutation.ADD_CONN,
-          Methods.Mutation.SUB_CONN,
-          Methods.Mutation.MOD_WEIGHT,
-          Methods.Mutation.MOD_BIAS,
-          Methods.Mutation.MOD_ACTIVATION,
-          Methods.Mutation.ADD_GATE,
-          Methods.Mutation.SUB_GATE,
-          Methods.Mutation.ADD_SELF_CONN,
-          Methods.Mutation.SUB_SELF_CONN,
-          Methods.Mutation.ADD_BACK_CONN,
-          Methods.Mutation.SUB_BACK_CONN
-        ],
-        popsize: creatureAmount,
-        mutationRate: mutationRate1,
-        elitism: Math.round(elitismPercentage * creatureAmount),
-        network: new Architect.Random(foodDetection * 2, StartHiddenSize, 2)
-      }
-    );
-  
-    if(useTrained){
-      neat.population = population;
+  neat = new Neat(1 + foodDetection * 2, 2, null,
+    {
+      //array of mutation types to be used in evolutionary process
+      mutation: Methods.Mutation.ALL,
+      popsize: creatureAmount,
+      mutationRate: mutationRate1,
+      elitism: Math.round(elitismPercentage * creatureAmount),
+      network: new Architect.Random(1 + foodDetection * 2, startHiddenSize, 2)
     }
+  );
 }
 
 /** Start the evaluation of the current generation */
@@ -64,9 +44,9 @@ function startEvaluation(){
     creatures = [];
     highestScore = 0;
   
-    for(i=0;i<100;i++){ //doesn't like this
-      
-      new Creature();
+    for(var genome in neat.population){ 
+      genome = neat.population[genome];
+      new Creature(genome);
     }
 }
 
@@ -93,6 +73,7 @@ function endEvaluation(){
   
     neat.generation++;
     startEvaluation();
-  }
+}
+  
   
 
