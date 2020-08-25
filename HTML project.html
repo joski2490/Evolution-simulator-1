@@ -10,6 +10,9 @@
 </head>
 
 <body>
+  <header>
+    <h1>Evolution simulator</h1>
+  </header>
 
   <div id="graphs" style="display:inline-flex;">
     <div style="width: 50%;">
@@ -20,11 +23,29 @@
     </div>
   </div>
 
+  <div id="paragraph" style="display:inline-flex;">
+    <div style="width: 50%;">
+      <button class="button" type="button" onclick="enableSpeed()">Increase Speed</button>
+      <button class="button"type="button" onclick="disableSpeed()">Decrease Speed</button>
+      
+    </div>
+    <div style="width: 50%;">
+      <p>This is an evolution simulator where the blue creatures have to learn how to eat the green food. At first, the creatures have no clue what to do, but over time, the best performers are selected and carried on to the next generation</p>
+    </div>
+  </div>
+
+  
+
+  
+  
+
 <link rel="stylesheet" href="CSS project.css">
 <script language="javascript" type="text/javascript" src="JS charts.js"></script>
 <script language="javascript" type="text/javascript" src="JS project.js"></script>
 <script language="javascript" type="text/javascript" src="NEAT.js"></script>
 <script language="javascript" type="text/javascript" src="Food.js"></script>
+<script language="javascript" type="text/javascript" src="Creature.js"></script>
+<script language="javascript" type="text/javascript" src="Buttons.js"></script>
 
 </body>
 </html>
