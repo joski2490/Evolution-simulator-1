@@ -1,10 +1,10 @@
-new Chart(document.getElementById("line-chart"), {
+var chart = new Chart(document.getElementById("line-chart"), {
     type: 'line',
     data: {
-      labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+      labels: [],
       datasets: [{ 
-          data: [86,114,106,106,107,111,133,221,783,2478],
-          label: "test",
+          data: [],
+          label: "Score",
           borderColor: "#3e95cd",
           fill: false
         }, 
@@ -13,32 +13,65 @@ new Chart(document.getElementById("line-chart"), {
     options: {
       title: {
         display: true,
-        text: 'test'
+        text: 'Score over generations'
+      },
+      scales: {
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Generation'
+          }
+        }],
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Score'
+          }  
+        }]
       },
       responsive: false
     }
 });
 
-new Chart(document.getElementById("line-chart2"), {
-    type: 'line',
-    data: {
-      labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
-      datasets: [{ 
-          data: [86,114,106,106,107,111,133,221,783,2478],
-          label: "test",
-          borderColor: "#3e95cd",
-          fill: false
-        }, 
-      ]
+function addData(chart, label, data) {
+  chart.data.labels.push(label);
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.push(data);
+  });
+  chart.update();
+}
+
+var chart2 = new Chart(document.getElementById("line-chart2"), {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{ 
+        data: [],
+        label: "Score",
+        borderColor: "#3e95cd",
+        fill: false
+      }, 
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'Heighest score over generations'
     },
-    options: {
-      title: {
-        display: true,
-        text: 'test'
-      },
-      responsive: false
-    }
+    scales: {
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Generation'
+        }
+      }],
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Score'
+        }  
+      }]
+    },
+    responsive: false
+  }
 });
-
-
-  
