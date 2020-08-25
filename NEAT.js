@@ -1,45 +1,39 @@
-/** Rename vars */
-var Neat = neataptic.Neat;
-var Methods = neataptic.Methods;
-var Config = neataptic.Config;
-var Architect = neataptic.Architect;
-
-/** Settings */
 var detectionRadius = 150;
 var foodDetection  = 3;
 
-var minSpeed = 0.6;
-var speed = 3;
+var foodAmount = 150;
 
-var foodArea = 80;
-var foodAmount = 500;
+var SPEED = 3;
 
-// GA settings
-var creatureAmount = 50;
-var iterations = 100;
-var startHiddenSize = 0;
+var creatureAmount = 20;
+var iterations = 600;
+var startHiddenSize = 5;
 var mutationRate1 = 0.3;
 var elitismPercentage = 0.1;
 
-
-// Global vars
 var neat;
 
-/** Construct the genetic algorithm */
+var generation;
+var score;
+
+//so I don't get annoying messages
+neataptic.Config.warnings = false;
+
+// Construct the genetic algorithm
 function initNeat(){
-  neat = new Neat(1 + foodDetection * 2, 2, null,
+  //foodDetection is *2 because the angle and distance of food needs to be inputted
+  neat = new neataptic.Neat(foodDetection * 2, 2, null,
     {
-      //array of mutation types to be used in evolutionary process
-      mutation: Methods.Mutation.ALL,
+      mutation: neataptic.Methods.Mutation.ALL,
       popsize: creatureAmount,
       mutationRate: mutationRate1,
       elitism: Math.round(elitismPercentage * creatureAmount),
-      network: new Architect.Random(1 + foodDetection * 2, startHiddenSize, 2)
+      network: new neataptic.Architect.Random(foodDetection * 2, startHiddenSize, 2)
     }
   );
 }
 
-/** Start the evaluation of the current generation */
+//Start the evaluation of the current generation
 function startEvaluation(){
     creatures = [];
     highestScore = 0;
@@ -50,10 +44,15 @@ function startEvaluation(){
     }
 }
 
-/** End the evaluation of the current generation */
+//End the evaluation of the current generation
 function endEvaluation(){
     console.log('Generation:', neat.generation, '- average score:', neat.getAverage());
-  
+    
+    //for graph
+    generation = neat.generation;
+    score = neat.getAverage();
+    addData(chart, generation, score)
+    addData(chart2, generation, highestScore)
     neat.sort();
     var newPopulation = [];
   
@@ -74,6 +73,3 @@ function endEvaluation(){
     neat.generation++;
     startEvaluation();
 }
-  
-  
-
