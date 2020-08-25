@@ -3,11 +3,9 @@ var food = [];
 var iteration = 0;
 var highestScore = 0;
 
+
 function setup() {
   var canvas = createCanvas(900, 800);
-  
-  canvas.id('canvas');
-  canvas.position(10,100);
   initNeat();
   // Triggers food spawning and limits amount of food
   for(var i = 0; i < foodAmount; i++){
@@ -18,13 +16,48 @@ function setup() {
   for(var i = 0; i < 100; i++) neat.mutate();
 
   startEvaluation();
+  //noLoop();
+  //setInterval(redraw, 10); // where 10 is the minimum time between frames in ms
+
+  canvas.id('canvas');
+  canvas.position(10,100);
+}
+
+
+/*Allow frame rate to go past monitor refresh rate - with the underlying requestAnimationFrame you are locked into whatever frame rate the browser gives you 
+(this is usually no higher than the monitor refresh rate, but it can be higher).
+I can take control of the loop myself with the following using the redraw function. However the browser may not visualise the canvas any quicker than the 
+requestAnimationFrame frequency even though it is simulated. This can result in what looks like stuttering.
+
+requestAnimationFrame is a broswer API method:
+
+The window.requestAnimationFrame() method tells the browser that you wish to perform an animation and requests that the browser 
+calls a specified function to update an animation before the next repaint. 
+The method takes a callback as an argument to be invoked before the repaint. You should call this method 
+whenever you're ready to update your animation onscreen. This will request that your animation function be called before the browser performs the next repaint. 
+The number of callbacks is usually 60 times per second, but will generally match the display refresh rate in most web browsers.
+requestAnimationFrame() calls are paused in most browsers when running in background tabs to improve performance and battery life.*/
+
+//these functions allow me to toggle speed increase
+var speed = false;
+function enableSpeed() {
+  noLoop();
+  speed = true;
+}
+function disableSpeed() {
+  loop();
+  speed = false;
 }
 
 /* 'Draw()' is part of P5.js and continually executes the lines of code 
 within it after the 'setup()' function has been triggered*/
 
 function draw() {
-  //makes sure the creature actually appears to move and doesnt leave a trail of where it was before
+  if(speed) {
+    setTimeout(redraw, 0); // where 0 is the minimum time between frames in ms
+  }
+ 
+  //makes sure the creature actually appears to move and doesn't leave a trail of where it was before
   clear();
 
   // Check if evaluation is done
@@ -37,7 +70,7 @@ function draw() {
   }
   for(var i = creatures.length - 1; i >= 0; i--){
     //refresh updates statistics
-    creatures[i].refresh();
+    creatures[i].move();
     //show then reflects these changes onto the canvas
     creatures[i].show();
   }
@@ -47,68 +80,24 @@ function draw() {
   and implement timer functions which are designed to execute code after a delay*/
 }
 
-function Creature(genome) {
-  this.x = Math.floor(Math.random() * 900);
-  this.y = Math.floor(Math.random() * 800);
-  this.velocityX = 0;
-  this.velocityY = 0;
-  
-  /*score is under gene because the score needs to be attached to the specific weights of the network,
-  there is an error otherwise*/
-  this.genes = genome;
-  this.score = 0;
-
-  creatures.push(this);
-}
-
-Creature.prototype.refresh = function() {
-
-  //angle needs to be connected to nn, it is fixed for test
-  var angle = 50;
-  var speed = 0.5;
-  
-  //https://stackoverflow.com/questions/22421054/determine-movement-vectors-direction-from-velocity
-  this.velocityX = speed * Math.cos(angle);
-  this.velocityY = speed * Math.sin(angle);
-  
-  this.x += this.velocityX;
-  this.y += this.velocityY;
-}
-
-//Restart from new position
-Creature.prototype.restart = function() {
-  this.x = Math.floor(Math.random() * 900);
-  this.y = Math.floor(Math.random() * 800);
-  this.velocityX = 0;
-  this.velocityX = 0;
-}
-
-Creature.prototype.show = function() {
-  fill('rgb(0,0,255)');
-  noStroke();
-  ellipse(this.x, this.y, 15); 
-}
-
-Creature.prototype.eat = function(food) {
-  var distance = distance(this.x, this.y, food.x, food.y);
-  //distance so small they're pretty much overlapping - collision detection
-  if (distance < 10) {
-    //score increases here
-    food.restart();
-  }
-}
 
 //distance between food and creature
-function distance(x1, x2, y1, y2) {
+function distance(x1, y1, x2, y2) {
   var distanceX = x2-x1;
   var distanceY = y2-y1;
-  return distanceX * distanceX + distanceY * distanceY;
+  //document sqrt bug - I missed it
+  return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
   //https://stackoverflow.com/questions/20916953/get-distance-between-two-points-in-canvas
 }
 
+// Get the angle from one point to another 
+function angleToPoint(x1, y1, x2, y2){
+  d = distance(x1, y1, x2, y2);
+  dx = (x2-x1) / d;
+  dy = (y2-y1) / d;
 
-
-
-
-
+  a = Math.acos(dx);
+  a = dy < 0 ? 2 * Math.PI - a : a;
+  return a;
+}
 
