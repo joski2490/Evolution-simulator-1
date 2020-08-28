@@ -5,7 +5,14 @@ function Creature(genome) {
     this.velocityY = 0;
     
     /*score is under gene because the score needs to be attached to the specific weights of the network,
-    there is an error otherwise*/
+     it is a library variable*/
+    
+    /*score is usually tied to population[i].score. Here though, instead of iterating through
+    the population array, the genome is just passed to the creature and individually given a score, 
+    remember population is just an array of genomes*/
+
+    /*genome is contains many stats about network, including input, nodes, gates, but more 
+    importantly, score is a statistic there, which is why score needs to be under genes (genome)*/
     this.genes = genome;
     this.genes.score = 0;
     this.points = 0;
@@ -16,9 +23,10 @@ function Creature(genome) {
 Creature.prototype.move = function() {
     
     var input = this.detect();
+    //activate is a library method
     var output = this.genes.activate(input);
     
-    var angle = output[0] * 2 * Math.PI;
+    var angle = output[0] * 2 * PI;
     var speed; 
     if (output[1] > 1) {
         speed = 1;
@@ -37,15 +45,92 @@ Creature.prototype.move = function() {
     this.x += this.velocityX;
     this.y += this.velocityY;
 
-    //https://stackoverflow.com/questions/39606123/how-can-i-achieve-a-wraparound-effect-in-an-arcade-like-game
-    // Limit position to width and height of canvas
-    this.x = this.x >= 900 ? this.x % 900 : this.x <= 0 ? this.x + 900 : this.x;
-    this.y = this.y >= 800 ? this.y % 800 : this.y <= 0 ? this.y + 800 : this.y;
-
+    this.enableWrap();
+    
     //points are lost every frame
     this.points *= 0.99;
     this.genes.score = this.points;
-    highestScore = this.genes.score > highestScore ? this.genes.score : highestScore;
+    
+    if (this.genes.score > highestScore) {
+        highestScore = this.genes.score;
+    }
+    else {
+        highestScore = highestScore;
+    }
+}
+
+Creature.prototype.disableWrap = function() {
+    //disables wrap around, creatures lose points if they move into a wall
+    //they can't see the wall...
+    if (this.x > 900) {
+        this.x = 900;
+        this.points -= 0.01;
+    }
+    if (this.x < 0) {
+        this.x = 0;
+        this.points -= 0.01;
+    }
+    if (this.y > 800) {
+        this.y = 800;
+        this.points -= 0.01;
+    }
+    if (this.y < 0) {
+        this.y = 0;
+        this.points -= 0.01;
+    }
+}
+
+Creature.prototype.enableWrapWithPenalty = function() {
+    //disables wrap around, creatures lose points if they move into a wall
+    //they can't see the wall...
+    if (this.x >= 900) {
+        this.x = this.x % 900;
+        this.points -= 10;
+    }
+    else if(this.x <= 0) {
+        this.x = this.x + 900;
+        this.points -= 10;
+    }
+    else {
+        this.x = this.x;  
+    }
+
+    if (this.y >= 800) {
+        this.y = this.y % 800
+        this.points -= 10;
+    }
+    else if (this.y <= 0) {
+        this.y = this.y + 800
+        this.points -= 10;
+    }
+    else {
+        this.y = this.y;
+    }
+}
+
+Creature.prototype.enableWrap = function() {
+    //https://stackoverflow.com/questions/39606123/how-can-i-achieve-a-wraparound-effect-in-an-arcade-like-game
+    //Limit position to width and height of canvas
+    //uses ternary operators
+    if (this.x >= 900) {
+        this.x = this.x % 900; 
+    }
+    else if(this.x <= 0) {
+        this.x = this.x + 900;
+    }
+    else {
+        this.x = this.x;  
+    }
+
+    if (this.y >= 800) {
+        this.y = this.y % 800  
+    }
+    else if (this.y <= 0) {
+        this.y = this.y + 800 
+    }
+    else {
+        this.y = this.y;
+    }
 }
   
 Creature.prototype.show = function() {
@@ -58,7 +143,7 @@ Creature.prototype.eat = function(food) {
     var distance1 = distance(this.x, this.y, food.x, food.y);
     //distance so small they're pretty much overlapping - collision detection
     if (distance1 < 10) {
-      this.points += 10;
+      this.points += 20;
       food.restart();
       return true;
     }
@@ -69,53 +154,61 @@ Creature.prototype.detect = function() {
     
     // Detect nearest foods
     var nearestFoods = [];
-    //makes an array the size of foodDetection and add infinity to the values
-    var foodDistances = Array.apply(null, Array(foodDetection)).map(Number.prototype.valueOf, Infinity);
+    //makes an array the size of foodDetection
+    //https://stackoverflow.com/questions/4852017/how-to-initialize-an-arrays-length-in-javascript
+    var foodDistances = Array.apply(null, Array(foodDetection)).map(function () {});
     
-    for(var food1 in food){
-        food1 = food[food1];
-        if(this.eat(food1)) continue;
+    for(var localFood in food){
+        localFood = food[localFood];
+        if(this.eat(localFood)) continue;
     
-        var dist = distance(this.x, this.y, food1.x, food1.y);
-        if(dist < detectionRadius){
-        // Check if closer than any other object
-        var maxNearestDistance = Math.max.apply(null, foodDistances);
-        var index = foodDistances.indexOf(maxNearestDistance);
-        
-            if(dist < maxNearestDistance){
-            foodDistances[index] = dist;
-            nearestFoods[index] = food1;
+        var distance1 = distance(this.x, this.y, localFood.x, localFood.y);
+        if(distance1 < detectionRadius){
+            // largest distance withing radius
+            var largestClosestDistance = Math.max.apply(null, foodDistances);
+            
+            //index in foodDistances where largestClosestDistance is
+            var whereLargest = foodDistances.indexOf(largestClosestDistance);
+            
+            if(distance1 < largestClosestDistance){
+                //separate arrays for the physical food and their distances
+                foodDistances[whereLargest] = distance1;
+                nearestFoods[whereLargest] = localFood;
             }
         }
     }
     
+    
     // Create and normalize input
-    var output = [];
+    var input = [];
+    
+    //so creature can avoid wall
+    //input.push(this.x/900);
+    //input.push(this.y/800);
     
     for(var i = 0; i < foodDetection; i++){
         var food1 = nearestFoods[i];
-        var dist = foodDistances[i];
+        var distance1 = foodDistances[i];
         
         if(food1 == undefined){
-        output = output.concat([0, 0]);
+            //if there is no food in distance, inputs are 0
+            input = input.concat([0, 0]);
         } 
         else {
             //output is an array, each of the following inputs the angle and distance to the network
-            output.push(angleToPoint(this.x, this.y, food1.x, food1.y) / (2 * PI));
-            output.push(dist / detectionRadius);
+            input.push(angle(this.x, this.y, food1.x, food1.y) / (2 * PI));
+            input.push(distance1 / detectionRadius);
         }
     }
-
+    //shows detection radius when you hover over creatures
     if(distance(mouseX, mouseY, this.x, this.y) < 15){
         noFill();
         stroke(0);
         ellipse(this.x, this.y, detectionRadius*2);
     }
-    console.log(output);
-    return output;
+    
+    return input;
 }
-
-
 
 
   
