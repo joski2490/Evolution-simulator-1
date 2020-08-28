@@ -4,6 +4,7 @@
   <script language="javascript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
   <script language="javascript" src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/addons/p5.sound.js"></script>
   <script src="https://cdn.rawgit.com/wagenaartje/neataptic/a7610e38/dist/neataptic.js"></script>
+  <!--<script src="https://liquidcarrot.io/carrot/cdn/0.2.20/carrot.js"></script>should migrate to liquid carrot -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.bundle.js"></script>
   <!may need jquery>
   
@@ -23,21 +24,39 @@
     </div>
   </div>
 
-  <div id="paragraph" style="display:inline-flex;">
-    <div style="width: 50%;">
-      <button class="button" type="button" onclick="enableSpeed()">Increase Speed</button>
-      <button class="button"type="button" onclick="disableSpeed()">Decrease Speed</button>
-      
+  <div id="paragraph" >
+
+    <div class="buttons">
+      <button id="button" type="button" onclick="enableSpeed()">Increase Speed</button>
+      <button id="button" type="button" onclick="disableSpeed()">Decrease Speed</button>
+      <button id="button" type="button" onclick="start()">start</button>
     </div>
-    <div style="width: 50%;">
-      <p>This is an evolution simulator where the blue creatures have to learn how to eat the green food. At first, the creatures have no clue what to do, but over time, the best performers are selected and carried on to the next generation</p>
+
+    <div id="boxGroup">
+      <div class="box">
+        <p id="button">Number of creatures</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
+      </div>
+      <div class="box">
+        <p id="button">Number of food</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
+      </div>
+      <div class="box">
+        <p id="button">Detection radius</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
+      </div>
+      <div class="box">
+        <p id="button">Iterations</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
+      </div>
+      <div class="box">
+        <p id="button">Mutation rate</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
+      </div>
+      <div class="box">
+        <p id="button">Number of hidden nodes at start</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
+      </div>
+      <div class="box">
+        <p id="button">Elitism percentage</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
+      </div>
     </div>
+    <button id="button" type="button" onclick="submit()">Submit</button>
   </div>
-
-  
-
-  
-  
 
 <link rel="stylesheet" href="CSS project.css">
 <script language="javascript" type="text/javascript" src="JS charts.js"></script>
