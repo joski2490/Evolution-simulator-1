@@ -1,3 +1,5 @@
+//feature = add option to choose where food goes - influences evolution.
+//feature = add poison = influences evolution
 function Food() {
   // Creates random coordinates for food
   this.x = Math.floor(Math.random() * 900);
@@ -8,12 +10,32 @@ function Food() {
 
 //Food is an object - the show function defines what the food looks like
 Food.prototype.show = function() {
-  fill('rgb(0,255,0)');
+  fill('rgb(0,100,0)');
+    noStroke();
+    ellipse(this.x, this.y, 15);
+}
+
+Food.prototype.restart = function() {
+  this.x = Math.floor(Math.random() * 900);
+  this.y = Math.floor(Math.random() * 800);
+}
+
+//proposed feature
+function Poison() {
+  // Creates random coordinates for food
+  this.x = Math.floor(Math.random() * 900);
+  this.y = Math.floor(Math.random() * 800);
+  // 'Push' adds 1 food particle to the array
+  poison.push(this);
+}
+
+Poison.prototype.show = function() {
+  fill('rgb(255,0,0)');
     noStroke();
     ellipse(this.x, this.y, 8);
 }
 
-Food.prototype.restart = function() {
+Poison.prototype.restart = function() {
   this.x = Math.floor(Math.random() * 900);
   this.y = Math.floor(Math.random() * 800);
 }
