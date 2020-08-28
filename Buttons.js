@@ -12,7 +12,3 @@ function validateNumber() {
       return true;
     }
 }
-
-function start() {
-    
-}
