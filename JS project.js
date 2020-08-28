@@ -1,9 +1,10 @@
 var creatures = [];
 var food = [];
+var poison = [];
 var iteration = 0;
 var highestScore = 0;
 
-
+//P5.js function
 function setup() {
   var canvas = createCanvas(900, 800);
   initNeat();
@@ -91,7 +92,7 @@ function distance(x1, y1, x2, y2) {
 }
 
 // Get the angle from one point to another 
-function angleToPoint(x1, y1, x2, y2){
+function angle(x1, y1, x2, y2){
   d = distance(x1, y1, x2, y2);
   dx = (x2-x1) / d;
   dy = (y2-y1) / d;
