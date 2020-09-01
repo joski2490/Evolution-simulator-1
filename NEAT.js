@@ -1,16 +1,18 @@
-var detectionRadius = 150;
+var detectionRadius;
 var foodDetection  = 4;
 
-var foodAmount = 50;
+/*optimisation - adding less food means creatures actually have to learn
+instead of going really fast in a straight line where there is a likely chance they will run into food*/
+var foodAmount;
 
 var SPEED = 3;
 
-var creatureAmount = 10;
-var iterations = 600;
-var startHiddenSize = 0;
-var mutationRate1 = 0.5;
-var mutationAmount1 = 1;
-var elitismPercentage = 0.3;
+var creatureAmount;
+var iterations;
+var startHiddenSize;
+var mutationRate1;
+var mutationAmount1;
+var elitismPercentage;
 
 var neat;
 
@@ -23,14 +25,14 @@ neataptic.Config.warnings = false;
 // Construct the genetic algorithm
 function initNeat(){
   //foodDetection is *2 because the angle and distance of food needs to be inputted
-  neat = new neataptic.Neat(2 + foodDetection * 2, 2, null,
+  neat = new neataptic.Neat(foodDetection * 2, 2, null,
     {
       mutation: neataptic.Methods.Mutation.ALL,
       popsize: creatureAmount,
       mutationRate: mutationRate1,
       mutationAmount: mutationAmount1,
       elitism: Math.round(elitismPercentage * creatureAmount),
-      network: new neataptic.Architect.Random(2 + foodDetection * 2, startHiddenSize, 2)
+      network: new neataptic.Architect.Random(foodDetection * 2, startHiddenSize, 2)
     }
   );
 }
@@ -43,7 +45,6 @@ function startEvaluation(){
     for(var genome in neat.population){ 
       genome = neat.population[genome];
       new Creature(genome);
-      console.log(genome);
     }
 }
 
