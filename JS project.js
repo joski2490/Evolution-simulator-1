@@ -4,34 +4,34 @@ var poison = [];
 var iteration = 0;
 var highestScore = 0;
 
+var started = false;
+
 //P5.js function
 function setup() {
-  var canvas = createCanvas(900, 800);
-  initNeat();
-  // Triggers food spawning and limits amount of food
-  for(var i = 0; i < foodAmount; i++){
-  // As food is an object, 'new' calls in a new instance of food
-  new Food();
-  }
-
-  for(var i = 0; i < 100; i++) neat.mutate();
-
-  startEvaluation();
-  //noLoop();
-  //setInterval(redraw, 10); // where 10 is the minimum time between frames in ms
-
+  var canvas = createCanvas(windowWidth, windowHeight);
+  noLoop();
   canvas.id('canvas');
-  canvas.position(10,100);
+  canvas.parent('canvas-wrapper');
+  textSize(40);
+  fill(50);
+  text('Scroll down to change simulation parameters', 600, 400); // Text wraps within text box
+  
+  
+
+ 
+  
 }
 
+//client wanted this, program wasn't responsive
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
 
 /*Allow frame rate to go past monitor refresh rate - with the underlying requestAnimationFrame you are locked into whatever frame rate the browser gives you 
 (this is usually no higher than the monitor refresh rate, but it can be higher).
 I can take control of the loop myself with the following using the redraw function. However the browser may not visualise the canvas any quicker than the 
 requestAnimationFrame frequency even though it is simulated. This can result in what looks like stuttering.
-
 requestAnimationFrame is a broswer API method:
-
 The window.requestAnimationFrame() method tells the browser that you wish to perform an animation and requests that the browser 
 calls a specified function to update an animation before the next repaint. 
 The method takes a callback as an argument to be invoked before the repaint. You should call this method 
@@ -54,6 +54,7 @@ function disableSpeed() {
 within it after the 'setup()' function has been triggered*/
 
 function draw() {
+if (started) {
   if(speed) {
     setTimeout(redraw, 0); // where 0 is the minimum time between frames in ms
   }
@@ -80,6 +81,27 @@ function draw() {
   the code here is continually looped. This means I don't have to try
   and implement timer functions which are designed to execute code after a delay*/
 }
+}
+function start(){
+  started = true;
+  //document bug
+  iteration = 0;
+  food = [];
+  initNeat();
+  // Triggers food spawning and limits amount of food
+  for(var i = 0; i < foodAmount; i++){
+  // As food is an object, 'new' calls in a new instance of food
+  new Food();
+  }
+
+  for(var i = 0; i < 100; i++) neat.mutate();
+
+  startEvaluation();
+  
+  loop();
+  
+
+}
 
 
 //distance between food and creature
@@ -101,4 +123,3 @@ function angle(x1, y1, x2, y2){
   a = dy < 0 ? 2 * Math.PI - a : a;
   return a;
 }
-
