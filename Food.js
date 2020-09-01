@@ -2,8 +2,8 @@
 //feature = add poison = influences evolution
 function Food() {
   // Creates random coordinates for food
-  this.x = Math.floor(Math.random() * 900);
-  this.y = Math.floor(Math.random() * 800);
+  this.x = Math.floor(Math.random() * windowWidth);
+  this.y = Math.floor(Math.random() * windowHeight);
   // 'Push' adds 1 food particle to the array
   food.push(this);
 }
@@ -16,8 +16,8 @@ Food.prototype.show = function() {
 }
 
 Food.prototype.restart = function() {
-  this.x = Math.floor(Math.random() * 900);
-  this.y = Math.floor(Math.random() * 800);
+  this.x = Math.floor(Math.random() * windowWidth);
+  this.y = Math.floor(Math.random() * windowHeight);
 }
 
 //proposed feature
