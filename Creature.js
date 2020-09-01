@@ -1,6 +1,6 @@
 function Creature(genome) {
-    this.x = Math.floor(Math.random() * 900);
-    this.y = Math.floor(Math.random() * 800);
+    this.x = Math.floor(Math.random() * windowWidth);
+    this.y = Math.floor(Math.random() * windowHeight);
     this.velocityX = 0;
     this.velocityY = 0;
     
@@ -111,22 +111,22 @@ Creature.prototype.enableWrapWithPenalty = function() {
 Creature.prototype.enableWrap = function() {
     //https://stackoverflow.com/questions/39606123/how-can-i-achieve-a-wraparound-effect-in-an-arcade-like-game
     //Limit position to width and height of canvas
-    //uses ternary operators
-    if (this.x >= 900) {
-        this.x = this.x % 900; 
+    
+    if (this.x >= windowWidth) {
+        this.x = this.x % windowWidth; 
     }
     else if(this.x <= 0) {
-        this.x = this.x + 900;
+        this.x = this.x + windowWidth;
     }
     else {
         this.x = this.x;  
     }
 
-    if (this.y >= 800) {
-        this.y = this.y % 800  
+    if (this.y >= windowHeight) {
+        this.y = this.y % windowHeight;
     }
     else if (this.y <= 0) {
-        this.y = this.y + 800 
+        this.y = this.y + windowHeight;
     }
     else {
         this.y = this.y;
@@ -210,5 +210,3 @@ Creature.prototype.detect = function() {
     return input;
 }
 
-
-  
