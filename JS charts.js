@@ -29,7 +29,7 @@ var chart = new Chart(document.getElementById("line-chart"), {
           }  
         }]
       },
-      responsive: false
+      responsive: true
     }
 });
 
@@ -56,7 +56,7 @@ var chart2 = new Chart(document.getElementById("line-chart2"), {
   options: {
     title: {
       display: true,
-      text: 'Heighest score over generations'
+      text: 'Highest score over generations'
     },
     scales: {
       xAxes: [{
@@ -72,6 +72,6 @@ var chart2 = new Chart(document.getElementById("line-chart2"), {
         }  
       }]
     },
-    responsive: false
+    responsive: true
   }
 });
