@@ -14,50 +14,77 @@
   <header>
     <h1>Evolution simulator</h1>
   </header>
+  
+  <div id="canvas-wrapper"></div>
+  
 
-  <div id="graphs" style="display:inline-flex;">
-    <div style="width: 50%;">
-      <canvas id="line-chart" width="500" height="500"></canvas>
+  <div class="flex-container">
+
+      <div id="graphs" style="display:inline-flex;">
+        <div style="width: 50%;">
+          <canvas id="line-chart" width="500" height="500"></canvas>
+        </div>
+        <div style="width: 50%;">
+          <canvas id="line-chart2" width="500" height="500"></canvas>
+        </div>
+      </div>
+
+      <div id="paragraph" >
+
+        <div class="buttons">
+          <button id="button" type="button" onclick="enableSpeed()">Increase Speed</button>
+          <button id="button" type="button" onclick="disableSpeed()">Decrease Speed</button>
+          <button id="button" type="button" onclick="checkAnswers()">Submit</button>
+          <button id="button" type="button" onclick="defaultSettings()">Default settings</button>
+        </div>
+
+        <form id="input">
+        <div id="boxGroup">
+          <div class="box">
+            <p>Number of creatures</p><input id="num1" type="number" name="quantity1" min="0" max="1000" step="1">
+          </div>
+          <div class="box">
+            <p>Number of food</p><input id="num2" type="number" name="quantity2" min="0" max="1000" step="1">
+          </div>
+          <div class="box">
+            <p>Detection radius</p><input id="num3" type="number" name="quantity3" min="0" max="1000" step="1">
+          </div>
+          <div class="box">
+            <p>Iterations</p><input id="num4" type="number" name="quantity4" min="0" max="1000" step="1">
+          </div>
+          <div class="box">
+            <p>Mutation rate</p><input id="num5" type="number" name="quantity5" min="0" max="1000" step="1">
+          </div>
+          <div class="box">
+            <p>Number of hidden nodes at start</p><input id="num6" type="number" name="quantity6" min="0" max="1000" step="1">
+          </div>
+          <div class="box">
+            <p>Elitism percentage</p><input id="num7" type="number" name="quantity7" min="0" max="1000" step="1">
+          </div>
+          <div class="box">
+            <p>Mutation Amount</p><input id="num8" type="number" name="quantity8" min="0" max="1000" step="1">
+          </div>
+        </div>
+        </form>
+        
+        <p>This is an evolution simulator that uses neural networks controlled by a 
+          genetic algorithm to evolve blue creatures whose goal it is to learn how to eat the green food.
+          <br><br>
+          There are a variety of simulation parameters that you can change: <br><br>
+          <ol id="list">
+            <li>Number of creatures: this is the total numbers of creatures in the simulation.</li>
+            <li>Number of food: this is the total number of food in the simulation.</li>
+            <li>Detection radius: this is the radius in which the creatures can see food.</li>
+            <li>Iterations: this is how long eat evaluation/generation will last for.</li>
+            <li>Mutation rate: the percentage of creatures that will be mutated every generation. Note, This is a value between 0 and 1 e.g. 0.5 = 50%.</li>
+            <li>Iterations: this is how long eat evaluation/generation will last for.</li>
+            <li>Number of hidden nodes at start: how many hidden nodes the neural networks will have when initialised.</li>
+            <li>Elitism percentage: the percentage of the top performing creatures that get copied into the next generation. This is also a decimal from 0 to 1.</li>
+            <li>Mutation amount: the amount of times a mutation method will get applied to each neural network.</li>
+          </ol>
+        </p>
+      </div>
     </div>
-    <div style="width: 50%;">
-      <canvas id="line-chart2" width="500" height="500"></canvas>
-    </div>
-  </div>
-
-  <div id="paragraph" >
-
-    <div class="buttons">
-      <button id="button" type="button" onclick="enableSpeed()">Increase Speed</button>
-      <button id="button" type="button" onclick="disableSpeed()">Decrease Speed</button>
-      <button id="button" type="button" onclick="start()">start</button>
-    </div>
-
-    <div id="boxGroup">
-      <div class="box">
-        <p id="button">Number of creatures</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
-      </div>
-      <div class="box">
-        <p id="button">Number of food</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
-      </div>
-      <div class="box">
-        <p id="button">Detection radius</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
-      </div>
-      <div class="box">
-        <p id="button">Iterations</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
-      </div>
-      <div class="box">
-        <p id="button">Mutation rate</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
-      </div>
-      <div class="box">
-        <p id="button">Number of hidden nodes at start</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
-      </div>
-      <div class="box">
-        <p id="button">Elitism percentage</p><input id="creatures" type="number" name="quantity" min="0" max="100" step="1">
-      </div>
-    </div>
-    <button id="button" type="button" onclick="submit()">Submit</button>
-  </div>
-
 <link rel="stylesheet" href="CSS project.css">
 <script language="javascript" type="text/javascript" src="JS charts.js"></script>
 <script language="javascript" type="text/javascript" src="JS project.js"></script>
