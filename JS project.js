@@ -12,17 +12,11 @@ function setup() {
   noLoop();
   canvas.id('canvas');
   canvas.parent('canvas-wrapper');
-  textSize(40);
+  textSize(38);
   fill(50);
-  text('Scroll down to change simulation parameters', 600, 400); // Text wraps within text box
-  
-  
-
- 
-  
+  text('Scroll down to change simulation parameters', windowWidth/3.2, windowHeight/2);
 }
 
-//client wanted this, program wasn't responsive
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
@@ -82,9 +76,11 @@ if (started) {
   and implement timer functions which are designed to execute code after a delay*/
 }
 }
+
+//took out of setup so I can choose when it starts
 function start(){
   started = true;
-  //document bug
+  //document bug, theory is that iteration was higher than iterations when it restarted so the generation never ended as iteration never = iterations
   iteration = 0;
   food = [];
   initNeat();
@@ -99,8 +95,6 @@ function start(){
   startEvaluation();
   
   loop();
-  
-
 }
 
 
