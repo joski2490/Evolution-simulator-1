@@ -1,14 +1,14 @@
 function validateNumber() {
-    //document difficulties
     False = [];
+    //elements looped instead of validating each individually
     for(i=1;i<9;i++) {
-      var num =  document.getElementById("num" + i).value.lengh;
-      
+      var num =  document.getElementById("num" + i).value.length;
+      //put = instead of ==
       if (num == 0) {
         False.push("Empty");
       } 
     }
-    console.log(False);
+    
     if (Array.isArray(False) && False.length)  {
       alert("you need to fill in all numbers");
       return false;
@@ -18,12 +18,11 @@ function validateNumber() {
     }
 }
 
-function checkAnswers(){
+function changeSettings(){
   
   settings = document.forms.input.elements;
   if (validateNumber()){
     
-    // Check the answer to the first question
     answer1 = settings.quantity1.value;
     creatureAmount = answer1;
 
@@ -49,27 +48,25 @@ function checkAnswers(){
     mutationAmount1 = answer8;
     
     start();
-    
   }
 }
 
 function defaultSettings() {
   settings = document.forms.input.elements;
   
-    // Check the answer to the first question
     settings.quantity1.value = 15;
     answer1 = settings.quantity1.value;
     creatureAmount = answer1;
 
-    settings.quantity2.value = 50;
+    settings.quantity2.value = 130;
     answer2 = settings.quantity2.value;
     foodAmount = answer2;
     
-    settings.quantity3.value = 150;
+    settings.quantity3.value = 170;
     answer3 = settings.quantity3.value;
     detectionRadius = answer3;
     
-    settings.quantity4.value = 500;
+    settings.quantity4.value = 600;
     answer4 = settings.quantity4.value;
     iterations = answer4;
     
@@ -77,19 +74,18 @@ function defaultSettings() {
     answer5 = settings.quantity5.value;
     mutationRate1 = answer5;
     
-    settings.quantity6.value = 0;
+    settings.quantity6.value = 5;
     answer6 = settings.quantity6.value;
     startHiddenSize = answer6;
 
-    settings.quantity7.value = 0.1;
+    settings.quantity7.value = 0.2;
     answer7 = settings.quantity7.value;
     elitismPercentage = answer7;
     
-    settings.quantity8.value = 1;
+    settings.quantity8.value = 3;
     answer8 = settings.quantity8.value;
     mutationAmount1 = answer8;
     
     start();
-    
-  
 }
+
