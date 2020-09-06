@@ -12,7 +12,7 @@ function Food() {
 Food.prototype.show = function() {
   fill('rgb(0,100,0)');
     noStroke();
-    ellipse(this.x, this.y, 15);
+    ellipse(this.x, this.y, 12);
 }
 
 Food.prototype.restart = function() {
@@ -23,8 +23,8 @@ Food.prototype.restart = function() {
 //proposed feature
 function Poison() {
   // Creates random coordinates for food
-  this.x = Math.floor(Math.random() * 900);
-  this.y = Math.floor(Math.random() * 800);
+  this.x = Math.floor(Math.random() * windowWidth);
+  this.y = Math.floor(Math.random() * windowHeight);
   // 'Push' adds 1 food particle to the array
   poison.push(this);
 }
@@ -36,6 +36,6 @@ Poison.prototype.show = function() {
 }
 
 Poison.prototype.restart = function() {
-  this.x = Math.floor(Math.random() * 900);
-  this.y = Math.floor(Math.random() * 800);
+  this.x = Math.floor(Math.random() * windowWidth);
+  this.y = Math.floor(Math.random() * windowHeight);
 }
