@@ -20,7 +20,7 @@
 
   <div class="flex-container">
 
-      <div id="graphs" style="display:inline-flex;">
+      <div id="graphs">
         <div style="width: 50%;">
           <canvas id="line-chart" width="500" height="500"></canvas>
         </div>
@@ -34,7 +34,7 @@
         <div class="buttons">
           <button id="button" type="button" onclick="enableSpeed()">Increase Speed</button>
           <button id="button" type="button" onclick="disableSpeed()">Decrease Speed</button>
-          <button id="button" type="button" onclick="checkAnswers()">Submit</button>
+          <button id="button" type="button" onclick="changeSettings()">Submit</button>
           <button id="button" type="button" onclick="defaultSettings()">Default settings</button>
         </div>
 
@@ -75,7 +75,7 @@
             <li>Number of creatures: this is the total numbers of creatures in the simulation.</li>
             <li>Number of food: this is the total number of food in the simulation.</li>
             <li>Detection radius: this is the radius in which the creatures can see food.</li>
-            <li>Iterations: this is how long eat evaluation/generation will last for.</li>
+            <li>Iterations: this is how long each evaluation/generation will last for.</li>
             <li>Mutation rate: the percentage of creatures that will be mutated every generation. Note, This is a value between 0 and 1 e.g. 0.5 = 50%.</li>
             <li>Iterations: this is how long eat evaluation/generation will last for.</li>
             <li>Number of hidden nodes at start: how many hidden nodes the neural networks will have when initialised.</li>
