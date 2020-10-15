@@ -156,7 +156,7 @@ Creature.prototype.detect = function() {
     var nearestFoods = [];
     //makes an array the size of foodDetection
     //https://stackoverflow.com/questions/4852017/how-to-initialize-an-arrays-length-in-javascript
-    var foodDistances = Array.apply(null, Array(foodDetection)).map(function () {});
+    var foodDistances = Array.apply(null, Array(foodDetection)).map(Number.prototype.valueOf, Infinity);
     
     for(var localFood in food){
         localFood = food[localFood];
