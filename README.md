@@ -4,7 +4,7 @@ This is an evolution simulator where creatures are trained to eat food. It uses 
 balance between the fitness of evolved solutions and their diversity, which is an example of a topology and
 weight evolving artificial neural network (TWEANN). Visualisation is done using P5.js and charts by Chart.js.
 
-Evolution can typically be observed within 10 minutes. The score should also increase. In order to maximise the speed of evolution, there is a default settings button which has settings that I have attempted to optimise. However all the settings can still be changed, which include:
+Evolution can typically be observed within 300 generations. The score should also increase. In order to maximise the speed of evolution, there is a default settings button which has settings that I have attempted to optimise. However all the settings can still be changed, which include:
 
 * Number of creatures.
 * Number of food.
